@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Final Exam - 300347326</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <h1 class="text-center">Final Exam Set C</h1>
+
+    <div class="salesSummary mx-auto" style="width: 800px;">
+        <h2>Sales Summary by Category</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Category Code</th>
+                <th scope="col">Category Description</th>
+                <th scope="col">Total Sales</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="summary : ${salesSummary}">
+                <td th:text="${summary.categoryCode}"></td>
+                <td th:text="${summary.categoryDesc}"></td>
+                <td th:text="${summary.totalSales}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="sales mx-auto" style="width: 800px;">
+        <div class="container mt-3" style="background: #00b3d5;">
+            <form action="/saveSales" method="post" onsubmit="return validateForm()" th:object="${sale}">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="recno" class="form-label">Record Number</label>
+                        <input type="number" class="form-control" id="recno" name="recno" required>
+                        <div th:if="${recno}" class="text-danger" th:text="${recno}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="icode" class="form-label">Item</label>
+                        <select class="form-select" id="icode" name="icode" required>
+                            <option value="">Select an item</option>
+                            <!-- Iterate over items retrieved from the server and populate the dropdown -->
+                            <option th:each="item : ${items}" th:value="${item.icode}" th:text="${item.icode + ' : ' + item.idesc}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="qty" class="form-label">Quantity</label>
+                        <input type="number" step="0.01" class="form-control" id="qty" name="qty">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="dot" class="form-label">Date of Transaction</label>
+                        <input type="date" class="form-control" id="dot" name="dot" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="salesView">
+        <div class="table-responsive mt-5">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Receipt Number</th>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Transaction Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="sale : ${sales}">
+                    <td th:text="${sale.recno}"></td>
+                    <td th:text="${sale.icode}"></td>
+                    <td th:text="${sale.qty}"></td>
+                    <td th:text="${#dates.format(sale.dot, 'MM/dd/yyyy')}"></td>
+                    <td>
+                        <a th:href="@{/edit/{id}(id=${sale.id})}" class="btn btn-primary btn-sm">Edit</a>
+                        <a th:href="@{/delete/{id}(id=${sale.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete the record?')">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var recno = document.getElementById("recno");
+            var qty = document.getElementById("qty");
+
+            if (recno.value.trim() === "" || qty.value.trim() === "" || Number(qty.value) === 0) {
+                if (recno.value.trim() === "") {
+                    recno.classList.add("is-invalid");
+                    alert("Receipt cannot be 0");
+                }
+                if (qty.value.trim() === "" || Number(qty.value) === 0) {
+                    qty.classList.add("is-invalid");
+                    if (Number(qty.value) === 0) {
+                        alert("Quantity cannot be 0");
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

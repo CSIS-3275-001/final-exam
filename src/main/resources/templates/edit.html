@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Sales Record</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<h1 class="text-center">Edit Sales Record</h1>
+
+<div class="sales mx-auto" style="width: 800px;">
+  <div class="container mt-3">
+    <form action="/updateSales" method="post" th:object="${sale}">
+      <input type="hidden" th:field="*{id}" />
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="recno" class="form-label">Record Number</label>
+          <input type="number" class="form-control" id="recno" th:field="*{recno}" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="icode" class="form-label">Item</label>
+          <select class="form-select" id="icode" name="icode" required>
+            <option value="">Select an item</option>
+            <!-- Iterate over items retrieved from the server and populate the dropdown -->
+            <option th:each="item : ${items}" th:value="${item.icode}" th:selected="${item.icode == sale.icode}" th:text="${item.icode + ' : ' + item.idesc}"></option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="qty" class="form-label">Quantity</label>
+          <input type="number" step="0.01" class="form-control" id="qty" th:field="*{qty}" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="dot" class="form-label">Date of Transaction</label>
+          <input type="date" class="form-control" id="dot" th:field="*{dot}" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <a href="/" class="btn btn-secondary">Back</a> <!-- Redirect to the index page -->
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
