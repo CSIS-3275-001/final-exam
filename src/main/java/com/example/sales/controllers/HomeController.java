@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -27,12 +29,15 @@ public class HomeController {
     @GetMapping("/")
     public String index(Model model) {
         List<Items> itemsList = itemsRepository.findAll();
-        List<Sales> salesList = salesRepository.findAll(); // Fetching sales data
+        List<Sales> salesList = salesRepository.findAll();
 
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String todayDate = formatter.format(new Date());
 
         model.addAttribute("items", itemsList);
-        model.addAttribute("sales", salesList); // Adding sales data to the model
+        model.addAttribute("sales", salesList);
         model.addAttribute("sale", new Sales());
+        model.addAttribute("todayDate", todayDate);
 
         return "index";
     }

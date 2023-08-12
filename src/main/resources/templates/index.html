@@ -9,25 +9,31 @@
 
     <h1 class="text-center">Final Exam Set C</h1>
 
-<!--    <div class="salesSummary mx-auto" style="width: 800px;">-->
-<!--        <h2>Sales Summary by Category</h2>-->
-<!--        <table class="table">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th scope="col">Category Code</th>-->
-<!--                <th scope="col">Category Description</th>-->
-<!--                <th scope="col">Total Sales</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
+    <hr>
+
+    <div class="salesSummary mx-auto" style="width: 800px;">
+        <h2>Sales Summary by Category</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Category Code</th>
+                <th scope="col">Category Description</th>
+                <th scope="col">Total Sales</th>
+            </tr>
+            </thead>
+            <tbody>
 <!--            <tr th:each="summary : ${salesSummary}">-->
 <!--                <td th:text="${summary.categoryCode}"></td>-->
 <!--                <td th:text="${summary.categoryDesc}"></td>-->
 <!--                <td th:text="${summary.totalSales}"></td>-->
 <!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </div>-->
+            <tr colspan="3">
+                <td colspan="3" class="text-center">No records found (not implemented)</td>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
 
     <div class="sales mx-auto" style="width: 800px;">
         <div class="container mt-3" style="background: #00b3d5;padding: 40px">
@@ -35,7 +41,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="recno" class="form-label">Record Number</label>
-                        <input type="number" class="form-control" id="recno" name="recno" required>
+                        <input type="number" class="form-control" id="recno" name="recno">
                         <div th:if="${recno}" class="text-danger" th:text="${recno}"></div>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -54,7 +60,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="dot" class="form-label">Date of Transaction</label>
-                        <input type="date" class="form-control" id="dot" name="dot" required>
+                        <input type="date" class="form-control" id="dot" name="dot" th:value="${todayDate}" required>
                     </div>
                 </div>
                 <div class="row">
@@ -82,7 +88,7 @@
                     <td th:text="${sale.recno}"></td>
                     <td th:text="${sale.icode}"></td>
                     <td th:text="${sale.qty}"></td>
-                    <td th:text="${#dates.format(sale.dot, 'MM/dd/yyyy')}"></td>
+                    <td th:text="${#dates.format(sale.dot, 'dd/MM/yyyy')}"></td>
                     <td>
                         <a th:href="@{/edit/{id}(id=${sale.id})}" class="btn btn-primary btn-sm">Edit</a>
                         <a th:href="@{/delete/{id}(id=${sale.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete the record?')">Delete</a>
