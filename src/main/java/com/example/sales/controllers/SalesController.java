@@ -45,10 +45,10 @@ public class SalesController {
         if (existingSales.isPresent() && existingSales.get().getIcode().equals(sale.getIcode())) {
 
             List<Items> itemsList = itemsRepository.findAll();
-            List<Sales> salesList = salesRepository.findAll(); // Fetching sales data
+            List<Sales> salesList = salesRepository.findAll();
 
             model.addAttribute("items", itemsList);
-            model.addAttribute("sales", salesList); // Adding sales data to the model
+            model.addAttribute("sales", salesList);
             model.addAttribute("sale", new Sales());
             model.addAttribute("recno", "Receipt number and item code already exist");
 
@@ -56,10 +56,10 @@ public class SalesController {
         } else if (existingSales.isPresent()) {
 
             List<Items> itemsList = itemsRepository.findAll();
-            List<Sales> salesList = salesRepository.findAll(); // Fetching sales data
+            List<Sales> salesList = salesRepository.findAll();
 
             model.addAttribute("items", itemsList);
-            model.addAttribute("sales", salesList); // Adding sales data to the model
+            model.addAttribute("sales", salesList);
             model.addAttribute("sale", new Sales());
             model.addAttribute("recno", "Receipt number already exists");
 
@@ -71,43 +71,38 @@ public class SalesController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-        List<Items> itemsList = itemsRepository.findAll(); // Fetching items
-        model.addAttribute("items", itemsList); // Adding items to the model
+        List<Items> itemsList = itemsRepository.findAll();
+        model.addAttribute("items", itemsList);
 
         Optional<Sales> saleOptional = salesRepository.findById(id);
         if (saleOptional.isPresent()) {
-            Sales sale = saleOptional.get(); // Extract the Sales object
-            model.addAttribute("sale", sale); // Add it to the model
-            return "edit"; // Return a view for editing the sales record
+            Sales sale = saleOptional.get();
+            model.addAttribute("sale", sale);
+            return "edit";
         }
-        // Handle the case where the id was not found in the repository, e.g., redirect to an error page
+
         return "redirect:/";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         salesRepository.deleteById(id);
-        return "redirect:/"; // Redirect back to the index page after deleting
+        return "redirect:/";
     }
 
     @PostMapping("/updateSales")
     public String updateSales(@ModelAttribute("sale") Sales sale, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            // Handle validation errors
             return "edit";
         }
 
-        // Check if sales record with given ID exists
         Optional<Sales> existingSales = salesRepository.findById(sale.getId());
         if (!existingSales.isPresent()) {
-            // Handle error if sales record not found
             return "redirect:/";
         }
 
-        // Update the sales record
         salesRepository.save(sale);
 
-        // Redirect to the index or another appropriate page
         return "redirect:/";
     }
 

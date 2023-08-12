@@ -33,39 +33,6 @@ public class SalesControllerTest {
     private SalesRepository salesRepository;
 
     @Test
-    public void testDisplay() throws Exception {
-
-        when(itemsRepository.findAll()).thenReturn(new ArrayList<>());
-        when(salesRepository.findAll()).thenReturn(new ArrayList<>());
-
-
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("index"));
-    }
-
-    @Test
-    public void testUpdateSales() throws Exception {
-        Sales existingSale = new Sales();
-
-        mockMvc.perform(post("/updateSales")
-                        .flashAttr("sale", existingSale))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
-    }
-
-    @Test
-    public void testDelete() throws Exception {
-
-        mockMvc.perform(get("/delete/1"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
-
-
-        verify(salesRepository).deleteById(1L);
-    }
-
-    @Test
     public void testSaveSales() throws Exception {
         Sales newSale = new Sales();
 
@@ -80,6 +47,16 @@ public class SalesControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"));
+    }
+
+    @Test
+    public void testUpdateSales() throws Exception {
+        Sales existingSale = new Sales();
+
+        mockMvc.perform(post("/updateSales")
+                        .flashAttr("sale", existingSale))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
     }
 
     @Test

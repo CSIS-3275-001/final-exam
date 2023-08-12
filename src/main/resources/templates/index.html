@@ -9,28 +9,28 @@
 
     <h1 class="text-center">Final Exam Set C</h1>
 
-    <div class="salesSummary mx-auto" style="width: 800px;">
-        <h2>Sales Summary by Category</h2>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Category Code</th>
-                <th scope="col">Category Description</th>
-                <th scope="col">Total Sales</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="summary : ${salesSummary}">
-                <td th:text="${summary.categoryCode}"></td>
-                <td th:text="${summary.categoryDesc}"></td>
-                <td th:text="${summary.totalSales}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<!--    <div class="salesSummary mx-auto" style="width: 800px;">-->
+<!--        <h2>Sales Summary by Category</h2>-->
+<!--        <table class="table">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th scope="col">Category Code</th>-->
+<!--                <th scope="col">Category Description</th>-->
+<!--                <th scope="col">Total Sales</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="summary : ${salesSummary}">-->
+<!--                <td th:text="${summary.categoryCode}"></td>-->
+<!--                <td th:text="${summary.categoryDesc}"></td>-->
+<!--                <td th:text="${summary.totalSales}"></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
 
     <div class="sales mx-auto" style="width: 800px;">
-        <div class="container mt-3" style="background: #00b3d5;">
+        <div class="container mt-3" style="background: #00b3d5;padding: 40px">
             <form action="/saveSales" method="post" onsubmit="return validateForm()" th:object="${sale}">
                 <div class="row">
                     <div class="col-md-6 mb-3">
